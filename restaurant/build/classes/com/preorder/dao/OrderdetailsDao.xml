@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.preorder.dao.OrderdetailsDao">
+	<resultMap type="com.preorder.beans.Orderdetails" id="OrderdetailsMap">
+		<id column="ID" property="ID" />
+		<result column="preorderID" property="preorderID" />
+		<result column="dishesname" property="dishesname" />
+		<result column="price" property="price" />
+		<result column="dcount" property="dcount" />
+		<result column="flag" property="flag" />
+		<result column="makedate" property="makedate" />
+		<result column="maketime" property="maketime" />
+		<result column="modifydate" property="modifydate" />
+		<result column="modifytime" property="modifytime" />
+	</resultMap>
+	<select id="getOrderdetails" resultMap="OrderdetailsMap">
+		select *
+		from orderdetails
+		WHERE
+		preorderID = #{preorderID}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

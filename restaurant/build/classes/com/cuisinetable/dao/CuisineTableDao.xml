@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuisinetable.dao.CuisineTableDao">
+	<resultMap type="com.cuisinetable.beans.CuisineTable" id="CuisineTableMap">
+		<id column="ID" property="ID" />
+		<result column="cuisinetablename" property="cuisinetablename" />
+		<result column="scheduledflag" property="scheduledflag" />
+		<result column="scheduledtime" property="scheduledtime" />
+		<result column="flag" property="flag" />
+		<result column="makedate" property="makedate" />
+		<result column="maketime" property="maketime" />
+		<result column="modifydate" property="modifydate" />
+		<result column="modifytime" property="modifytime" />
+	</resultMap>
+	<select id="getALLCuisineTable" resultMap="CuisineTableMap">
+		select  ID,cuisinetablename, case when  scheduledflag ='' or  scheduledflag is null then '空闲' else scheduledflag  end  scheduledflag ,scheduledtime,
+		 flag,makedate,maketime,modifydate,modifytime   
+		from
+		cuisinetable
+		WHERE flag ='0'
+	</select>
+
+	<select id="getCuisineTable" resultMap="CuisineTableMap">
+		select *
+		from cuisinetable
+		WHERE cuisinetablename like concat('%',#{name},'%')
+	</select>
+
+
+	<select id="selectAllRows" resultType="java.lang.Integer">
+		select count(id) from
+		cuisinetable
+	</select>
+	<select id="getMaxID" resultType="java.lang.Integer">
+		select max(id) from
+		cuisinetable
+	</select>
+	<select id="selectCurrentPgaeCuisineTable" resultMap="CuisineTableMap">
+		select  ID,cuisinetablename, case when  scheduledflag ='' or  scheduledflag is null  then '空闲' else scheduledflag  end  scheduledflag ,scheduledtime,
+		 flag,makedate,maketime,modifydate,modifytime   
+		from
+		cuisinetable
+		limit #{pageStartIndex}, #{pageSize}
+	</select>
+
+	<select id="selectCurrentPgaeCuisineTable1" resultMap="CuisineTableMap">
+	 <![CDATA[
+	 	select *
+		from cuisinetable
+		   cuisinetablename   like CONCAT('%', #{name}, '%')     
+		              
+	 ]]>
+	</select>
+	<select id="getONECuisineTable" resultType="com.cuisinetable.beans.CuisineTable">
+		select
+		* from
+		cuisinetable where id = #{id}
+	</select>
+
+	<insert id="addCuisineTable" parameterType="com.cuisinetable.beans.CuisineTable">
+		insert into
+		cuisinetable
+		values(#{ID},#{cuisinetablename},#{scheduledflag},#{scheduledtime},
+		#{flag},#{makedate},#{maketime},#{modifydate},#{modifytime})
+	</insert>
+	<delete id="deleteCuisineTable">
+		delete from cuisinetable where id =#{id};
+	</delete>
+	<update id="updateCuisineTable" >
+		update
+		cuisinetable set scheduledflag ='',scheduledtime = ''  where id
+		=#{id};
+	</update>
+	<update id="updateCuisineTable1" >
+		update
+		cuisinetable set scheduledflag ='预定' ,scheduledtime = (select sysdate() as Systemtime)  where id
+		=#{id};
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

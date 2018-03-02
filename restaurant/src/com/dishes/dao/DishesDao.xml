@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dishes.dao.DishesDao">
+ 	<resultMap type="com.dishes.beans.Dishes" id="DishesMap">
+		<id column="ID" property="ID" />
+		<result column="dishesname" property="dishesname" />
+		<result column="theircuisine" property="theircuisine" />
+		<result column="price" property="price" />
+		<result column="vipprice" property="vipprice" />
+		<result column="flag" property="flag" />
+		<result column="makedate" property="makedate" />
+		<result column="maketime" property="maketime" />
+		<result column="modifydate" property="modifydate" />
+		<result column="modifytime" property="modifytime" />
+	</resultMap>
+	<select id="getALLDishes" resultMap="DishesMap">
+		select *
+		from dishes WHERE flag ='0'		 
+	</select>
+
+	<select id="getDishes" resultMap="DishesMap">
+		select *
+		from dishes WHERE dishesname like CONCAT('%', #{name}, '%') 	 
+	</select>
+
+
+	<select id="selectAllRows" resultType="java.lang.Integer">
+		select count(id) from dishes
+	</select>
+	<select id ="getMaxID" resultType="java.lang.Integer">
+	select max(id) from dishes
+	</select>
+	<select id="selectCurrentPgaeDishes" resultMap="DishesMap">
+		select *
+		from dishes
+		limit #{pageStartIndex}, #{pageSize}
+	</select>
+	
+	 <select id="selectCurrentPgaeDishes1" resultMap="DishesMap">
+	 <![CDATA[
+	 	select *
+		from dishes
+		   dishesname   like CONCAT('%', #{name}, '%')     
+		              
+	 ]]>
+		
+	</select>
+	<select id="getONEDishes" resultType="com.dishes.beans.Dishes">
+		select id,dishesname,theircuisine,price,vipprice,flag,makedate,maketime,modifydate,modifytime from
+		dishes where id = #{id}  
+	</select>
+	
+	<insert id ="addDishes"    parameterType="com.dishes.beans.Dishes" >    
+       insert into dishes values(#{ID},#{dishesname},#{theircuisine},#{price},#{vipprice},#{flag},#{makedate},#{maketime},#{modifydate},#{modifytime})
+    </insert>
+    <delete id ="deleteDishes" >
+      delete from dishes where  id =#{id};
+    </delete>
+      <update id ="updateDishes"    parameterType="com.dishes.beans.Dishes">
+      update  dishes set dishesname =#{dishesname},price=#{price}, vipprice=#{vipprice},modifydate=#{modifydate},modifytime=#{modifytime} where  id =#{ID};
+    </update>
+    
+    <resultMap id="ipDeptResult" type="java.util.Map">
+    <result property="key" column="ID"/>
+    <result property="value" column="cuisinename"/>
+     </resultMap>
+      <select id ="getCuisine" resultMap="ipDeptResult" >
+     select ID, cuisinename
+		from cuisine
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
